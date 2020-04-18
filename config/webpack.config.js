@@ -24,6 +24,8 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const postcssNormalize = require('postcss-normalize');
 
@@ -497,6 +499,12 @@ module.exports = function(webpackEnv) {
                   sourceMap: isEnvProduction && shouldUseSourceMap,
                 },
                 'less-loader',
+                {
+                  javascriptEnabled: true,
+                  modifyVars: {
+                    '@font-size-base': '12px',
+                  },
+                },
               ),
             },
             {
@@ -514,7 +522,6 @@ module.exports = function(webpackEnv) {
                   javascriptEnabled: true,
                   modifyVars: {
                     '@font-size-base': '12px',
-                    '@border-radius-base': '2px',
                   },
                 },
               ),
@@ -683,6 +690,8 @@ module.exports = function(webpackEnv) {
           // The formatter is invoked directly in WebpackDevServerUtils during development
           formatter: isEnvProduction ? typescriptFormatter : undefined,
         }),
+      new AntdDayjsWebpackPlugin(),
+      new BundleAnalyzerPlugin({ analyzerPort: 3001, openAnalyzer: false }),
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell webpack to provide empty mocks for them so importing them works.
