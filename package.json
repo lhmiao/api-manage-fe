@@ -76,7 +76,9 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
+    "fix": "eslint --fix src --ext .js,.jsx,.ts,.tsx"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -143,16 +145,22 @@
       "jest-watch-typeahead/testname"
     ]
   },
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
-  },
   "devDependencies": {
     "husky": "^4.2.5",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "lint-staged": "^10.1.4",
     "webpack-bundle-analyzer": "^3.7.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.(j|t)s?(x)": [
+      "eslint --fix --ext .js,.jsx,.ts,.tsx",
+      "git add"
+    ]
   }
 }
