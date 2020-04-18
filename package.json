@@ -149,6 +149,7 @@
     "husky": "^4.2.5",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
+    "lint-staged": "^10.1.4",
     "webpack-bundle-analyzer": "^3.7.0"
   }
 }
